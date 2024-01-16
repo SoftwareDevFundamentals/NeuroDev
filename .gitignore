@@ -25,7 +25,10 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-/src/main/resources
+# Ignore Spring Boot application properties
+/application*.properties
+# Ignore Spring Boot devtools
+.restart
 
 ### NetBeans ###
 /nbproject/private/
