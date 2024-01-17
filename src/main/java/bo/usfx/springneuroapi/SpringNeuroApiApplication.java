@@ -5,7 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class SpringNeuroApiApplication {
-    public static void main(String[] args) {
+
+    private SpringNeuroApiApplication() {
+
+    }
+
+    public static void main(final String[] args) {
         SpringApplication.run(SpringNeuroApiApplication.class, args);
     }
 
