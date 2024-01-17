@@ -1,4 +1,5 @@
 package bo.usfx.springneuroapi.model;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,9 +13,11 @@ public class Neurodiversity {
     private String basicExplanationLink;
     private String testLink;
 
-    public final String getId() { return id; }
+    public final String getId() {
+        return id;
+    }
 
-    public void setId(final String id) {
+    public final void setId(final String id) {
         this.id = id;
     }
 
@@ -22,7 +25,7 @@ public class Neurodiversity {
         return name;
     }
 
-    public void setName(final String name) {
+    public final void setName(final String name) {
         this.name = name;
     }
 
@@ -30,7 +33,7 @@ public class Neurodiversity {
         return description;
     }
 
-    public void setDescription(final String description) {
+    public final void setDescription(final String description) {
         this.description = description;
     }
 
@@ -38,7 +41,7 @@ public class Neurodiversity {
         return worldWidePercentage;
     }
 
-    public void setWorldWidePercentage(final String worldWidePercentage) {
+    public final void setWorldWidePercentage(final String worldWidePercentage) {
         this.worldWidePercentage = worldWidePercentage;
     }
 
@@ -46,7 +49,7 @@ public class Neurodiversity {
         return basicExplanationLink;
     }
 
-    public void setBasicExplanationLink(final String basicExplanationLink) {
+    public final void setBasicExplanationLink(final String basicExplanationLink) {
         this.basicExplanationLink = basicExplanationLink;
     }
 
@@ -54,7 +57,7 @@ public class Neurodiversity {
         return testLink;
     }
 
-    public void setTestLink(final String testLink) {
+    public final void setTestLink(final String testLink) {
         this.testLink = testLink;
     }
 }

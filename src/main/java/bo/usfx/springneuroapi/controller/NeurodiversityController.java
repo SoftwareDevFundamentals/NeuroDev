@@ -22,7 +22,7 @@ public class NeurodiversityController {
 
     //    GET request By Name
     @RequestMapping(method = RequestMethod.GET, value = "/api/v1/neurodiversity/{name}")
-    public final ResponseEntity<?> getByName(@PathVariable String name) {
+    public final ResponseEntity<?> getByName(@PathVariable final String name) {
         var neuroDiversity = neurodivergencyRepository.findByName(name);
         if (neuroDiversity != null) {
             return ResponseEntity.ok(neuroDiversity);
@@ -32,7 +32,7 @@ public class NeurodiversityController {
 
     //    Post Request
     @RequestMapping(method = RequestMethod.POST, value = "/api/v1/neurodiversity")
-    public final ResponseEntity<Neurodiversity> create(@RequestBody Neurodiversity neurodiversity) {
+    public final ResponseEntity<Neurodiversity> create(@RequestBody final Neurodiversity neurodiversity) {
         neurodivergencyRepository.save(neurodiversity);
         return new ResponseEntity<>(neurodiversity, HttpStatus.OK);
     }
