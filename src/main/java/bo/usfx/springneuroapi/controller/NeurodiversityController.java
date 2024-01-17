@@ -25,7 +25,7 @@ public final class NeurodiversityController {
 
 
     //get entity by method getId
-    @GetMapping("/api/v1/neurodiversities/id/{id}")
+    @GetMapping("/api/v1/neurodiversities/{id}")
     public ResponseEntity<?> getById(@PathVariable final String id) {
         var neuro = neurodivergencyRepository.findById(id);
         if (neuro != null) {
@@ -35,7 +35,7 @@ public final class NeurodiversityController {
     }
 
     //get entity by method getName
-    @GetMapping("/api/v1/neurodiversities/name/{name}")
+    @GetMapping("/api/v1/neurodiversities/{name}")
     public ResponseEntity<?> getByName(@PathVariable final String name) {
         var neuro = neurodivergencyRepository.findByName(name);
         if (neuro != null) {
@@ -44,7 +44,7 @@ public final class NeurodiversityController {
         return null;
     }
 
-    @PostMapping("/api/v1/neurodiversity/create")
+    @PostMapping("/api/v1/neurodiversity/")
     public ResponseEntity<?> createEntity(@RequestBody final Neurodiversity neurodiversity) {
         neurodivergencyRepository.save(neurodiversity);
         return new ResponseEntity<>(neurodiversity, HttpStatus.OK);
