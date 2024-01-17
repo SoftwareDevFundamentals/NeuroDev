@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "neurodiversities")
-public class Neurodiversity {
+public final class Neurodiversity {
     @Id
     private String id;
     private String name;
@@ -17,7 +17,7 @@ public class Neurodiversity {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -25,7 +25,7 @@ public class Neurodiversity {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -33,7 +33,7 @@ public class Neurodiversity {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -41,7 +41,7 @@ public class Neurodiversity {
         return worldWidePercentage;
     }
 
-    public void setWorldWidePercentage(String worldWidePercentage) {
+    public void setWorldWidePercentage(final String worldWidePercentage) {
         this.worldWidePercentage = worldWidePercentage;
     }
 
@@ -49,7 +49,7 @@ public class Neurodiversity {
         return basicExplanationLink;
     }
 
-    public void setBasicExplanationLink(String basicExplanationLink) {
+    public void setBasicExplanationLink(final String basicExplanationLink) {
         this.basicExplanationLink = basicExplanationLink;
     }
 
@@ -57,7 +57,7 @@ public class Neurodiversity {
         return testLink;
     }
 
-    public void setTestLink(String testLink) {
+    public void setTestLink(final String testLink) {
         this.testLink = testLink;
     }
 }
