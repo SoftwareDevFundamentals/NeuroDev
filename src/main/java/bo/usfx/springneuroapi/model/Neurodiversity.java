@@ -12,51 +12,49 @@ public class Neurodiversity {
     private String basicExplanationLink;
     private String testLink;
 
-    public String getId() {
-        return id;
-    }
+    public final String getId() { return id; }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
-    public String getDescription() {
+    public final String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
-    public String getWorldWidePercentage() {
+    public final String getWorldWidePercentage() {
         return worldWidePercentage;
     }
 
-    public void setWorldWidePercentage(String worldWidePercentage) {
+    public void setWorldWidePercentage(final String worldWidePercentage) {
         this.worldWidePercentage = worldWidePercentage;
     }
 
-    public String getBasicExplanationLink() {
+    public final String getBasicExplanationLink() {
         return basicExplanationLink;
     }
 
-    public void setBasicExplanationLink(String basicExplanationLink) {
+    public void setBasicExplanationLink(final String basicExplanationLink) {
         this.basicExplanationLink = basicExplanationLink;
     }
 
-    public String getTestLink() {
+    public final String getTestLink() {
         return testLink;
     }
 
-    public void setTestLink(String testLink) {
+    public void setTestLink(final String testLink) {
         this.testLink = testLink;
     }
 }
