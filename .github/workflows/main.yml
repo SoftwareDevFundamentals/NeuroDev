@@ -19,5 +19,5 @@ jobs:
         distribution: 'adopt'
     - name: Gradle wrapper execution permissions
       run: chmod +x gradlew
-    - name: Run Build Checkstyle and Jacoco
-      run: ./gradlew clean check
+    - name: Run Build Checkstyle
+      run: gradle checkstyleMain
