@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
+
 import org.springframework.web.server.ResponseStatusException;
 
 import java.lang.reflect.Field;
@@ -32,7 +34,7 @@ public final class NeurodiversityController {
 
 
     //get entity by method getId
-    @GetMapping("/api/v1/neurodiversities/id/{id}")
+    @GetMapping("/api/v1/neurodiversity/{id}")
     public ResponseEntity<?> getById(@PathVariable final String id) {
         var neuro = neurodivergencyRepository.findById(id);
         if (neuro != null) {
@@ -42,7 +44,7 @@ public final class NeurodiversityController {
     }
 
     //get entity by method getName
-    @GetMapping("/api/v1/neurodiversities/name/{name}")
+    @GetMapping("/api/v1/neurodiversity-name/{name}")
     public ResponseEntity<?> getByName(@PathVariable final String name) {
         var neuro = neurodivergencyRepository.findByName(name);
         if (neuro != null) {
@@ -51,16 +53,16 @@ public final class NeurodiversityController {
         return null;
     }
 
-    @PostMapping("/api/v1/neurodiversity/create")
+    @PostMapping("/api/v1/neurodiversity")
     public ResponseEntity<?> createEntity(@RequestBody final Neurodiversity neurodiversity) {
         neurodivergencyRepository.save(neurodiversity);
         return new ResponseEntity<>(neurodiversity, HttpStatus.OK);
     }
 
     // Put Request //
-    @PutMapping("/api/v1/neurodiversity/edit/{id}")
+    @PutMapping("/api/v1/neurodiversity/{id}")
     public ResponseEntity<Neurodiversity> updateN(@PathVariable(value = "id") final String id,
-           @RequestBody final Map<String, Object> fields) {
+                                                  @RequestBody final Map<String, Object> fields) {
         Neurodiversity updatedNeurodiversity = updateNeurodiversityFields(id, fields);
         neurodivergencyRepository.save(updatedNeurodiversity);
         return ResponseEntity.ok(updatedNeurodiversity);
@@ -79,5 +81,15 @@ public final class NeurodiversityController {
         });
         return neurodivergencyRepository.save(existing);
     }
-    //      //
+
+    //Delete Request
+    @DeleteMapping("/api/v1/neurodiversity/{id}")
+    public ResponseEntity<?> deleteNeuro(@PathVariable("id") final String id) {
+        try {
+            neurodivergencyRepository.deleteById(id);
+            return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }
