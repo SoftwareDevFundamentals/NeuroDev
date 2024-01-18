@@ -95,16 +95,19 @@ public final class NeurodiversityController {
     // @RequestParams //
 
     @GetMapping("/api/v1/neurodiversity")
-    public ResponseEntity<List<Neurodiversity>> getNeurodiversitiesBySubstring(
+    public ResponseEntity<Object> getNeurodiversitiesBySubstring(
             @RequestParam(required = false) final String name) {
 
-        List<Neurodiversity> neurodiversities;
-        if (name != null && !name.isEmpty()) {
-            neurodiversities = neurodivergencyRepository.findByNameStartingWithIgnoreCase(name);
-        } else {
-            neurodiversities = neurodivergencyRepository.findAll();
+        if (name == null || name.isEmpty()) {
+            return ResponseEntity.badRequest().body("Name parameter is required.");
         }
-        return new ResponseEntity<>(neurodiversities, HttpStatus.OK);
+
+        List<Neurodiversity> neurodiversities = neurodivergencyRepository.findByNameStartingWithIgnoreCase(name);
+        if (neurodiversities.isEmpty()) {
+            return ResponseEntity.ok("No matches found for the provided initial(s).");
+        }
+
+        return ResponseEntity.ok(neurodiversities);
     }
 
     // key word
