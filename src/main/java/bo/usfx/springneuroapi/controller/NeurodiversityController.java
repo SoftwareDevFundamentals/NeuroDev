@@ -61,7 +61,7 @@ public final class NeurodiversityController {
     // Put Request //
     @PutMapping("/api/v1/neurodiversity/{id}")
     public ResponseEntity<Neurodiversity> updateN(@PathVariable(value = "id") final String id,
-            @RequestBody final Map<String, Object> fields) {
+                                                  @RequestBody final Map<String, Object> fields) {
         Neurodiversity updatedNeurodiversity = updateNeurodiversityFields(id, fields);
         neurodivergencyRepository.save(updatedNeurodiversity);
         return ResponseEntity.ok(updatedNeurodiversity);
@@ -116,7 +116,6 @@ public final class NeurodiversityController {
         }
         return ResponseEntity.notFound().build();
     }
-
 
 
     // @RequestParams //
