@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 
-@RestController
+
 public final class NeurodiversityController {
     @Autowired
     private NeurodivergencyRepository neurodivergencyRepository;
@@ -79,5 +79,12 @@ public final class NeurodiversityController {
         });
         return neurodivergencyRepository.save(existing);
     }
-    //      //
+
+    //Delete entities by id
+    @DeleteMapping("/api/v1/neurodiversity/delete/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable final String id) {
+        neurodivergencyRepository.deleteById(id);
+        return ResponseEntity.ok("Entity response successfully");
+    }
+
 }
