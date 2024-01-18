@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.server.ResponseStatusException;
 
 import java.lang.reflect.Field;
@@ -88,5 +90,13 @@ public final class NeurodiversityController {
         neurodivergencyRepository.deleteById(idNeurodiversity);
         return ResponseEntity.ok(null);
     }
-    //      //
+// filtrar por descripcion
+    @GetMapping("/api/v1/neurodiversities/description")
+    public ResponseEntity<List<Neurodiversity>> getByDescription(@RequestParam("keyword") String keyword) {
+        List<Neurodiversity> neuro = neurodivergencyRepository.findByDescriptionContaining(keyword);
+        if (!neuro.isEmpty()) {
+            return ResponseEntity.ok(neuro);
+        }
+        return ResponseEntity.notFound().build();
+    }
 }
