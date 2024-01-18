@@ -108,6 +108,16 @@ public final class NeurodiversityController {
         }
         return new ResponseEntity<>(neurodiversities, HttpStatus.OK);
     }
+    // key word
+    @GetMapping("/api/v1/neurodiversities/description")
+    public ResponseEntity<List<Neurodiversity>> getByDescription(@RequestParam("keyword") final String keyword) {
+        List<Neurodiversity> neuro = neurodivergencyRepository.findByDescriptionContaining(keyword);
+        if (!neuro.isEmpty()) {
+            return ResponseEntity.ok(neuro);
+        }
+        return ResponseEntity.notFound().build();
+    }
+    
 
     //  @RequestParams  //
 }
