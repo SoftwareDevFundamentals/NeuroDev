@@ -5,9 +5,18 @@ import bo.usfx.springneuroapi.repository.NeurodivergencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -48,5 +57,27 @@ public final class NeurodiversityController {
         return new ResponseEntity<>(neurodiversity, HttpStatus.OK);
     }
 
+    // Put Request //
+    @PutMapping("/api/v1/neurodiversity/edit/{id}")
+    public ResponseEntity<Neurodiversity> updateN(@PathVariable(value = "id") final String id,
+           @RequestBody final Map<String, Object> fields) {
+        Neurodiversity updatedNeurodiversity = updateNeurodiversityFields(id, fields);
+        neurodivergencyRepository.save(updatedNeurodiversity);
+        return ResponseEntity.ok(updatedNeurodiversity);
+    }
 
+    public Neurodiversity updateNeurodiversityFields(final String id, final Map<String, Object> fields) {
+        Neurodiversity existing = neurodivergencyRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found id: " + id));
+
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(Neurodiversity.class, key);
+            if (field != null) {
+                field.setAccessible(true);
+                ReflectionUtils.setField(field, existing, value);
+            }
+        });
+        return neurodivergencyRepository.save(existing);
+    }
+    //      //
 }
