@@ -90,7 +90,8 @@ public final class NeurodiversityController {
         neurodivergencyRepository.deleteById(idNeurodiversity);
         return ResponseEntity.ok(null);
     }
-// filtrar por descripcion
+
+    // filtrar por descripcion
     @GetMapping("/api/v1/neurodiversities/description")
     public ResponseEntity<List<Neurodiversity>> getByDescription(@RequestParam("keyword") String keyword) {
         List<Neurodiversity> neuro = neurodivergencyRepository.findByDescriptionContaining(keyword);
