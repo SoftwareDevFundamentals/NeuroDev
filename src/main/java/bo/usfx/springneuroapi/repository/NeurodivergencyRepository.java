@@ -8,5 +8,7 @@ import java.util.List;
 public interface NeurodivergencyRepository extends MongoRepository<Neurodiversity, String> {
 
     List<Neurodiversity> findByName(String name);
+
+    List<Neurodiversity> findByNameStartingWithIgnoreCase(String name);
 }
 
