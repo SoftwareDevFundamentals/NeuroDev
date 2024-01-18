@@ -6,7 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import org.springframework.web.server.ResponseStatusException;
 
 import java.lang.reflect.Field;
@@ -55,7 +62,7 @@ public final class NeurodiversityController {
     // Put Request //
     @PutMapping("/api/v1/neurodiversity/edit/{id}")
     public ResponseEntity<Neurodiversity> updateN(@PathVariable(value = "id") final String id,
-           @RequestBody final Map<String, Object> fields) {
+                                                  @RequestBody final Map<String, Object> fields) {
         Neurodiversity updatedNeurodiversity = updateNeurodiversityFields(id, fields);
         neurodivergencyRepository.save(updatedNeurodiversity);
         return ResponseEntity.ok(updatedNeurodiversity);
@@ -76,9 +83,8 @@ public final class NeurodiversityController {
     }
 
 
-
     @DeleteMapping("/api/v1/neurodiversity/{idNeurodiversity}")
-    public ResponseEntity<?> deleteById(@PathVariable final String idNeurodiversity){
+    public ResponseEntity<?> deleteById(@PathVariable final String idNeurodiversity) {
         neurodivergencyRepository.deleteById(idNeurodiversity);
         return ResponseEntity.ok(null);
     }
