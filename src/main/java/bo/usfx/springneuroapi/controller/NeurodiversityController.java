@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.server.ResponseStatusException;
 
@@ -92,4 +93,21 @@ public final class NeurodiversityController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+    //  @RequestParams  //
+
+    @GetMapping("/api/v1/neurodiversity")
+    public ResponseEntity<List<Neurodiversity>> getNeurodiversitiesBySubstring(
+            @RequestParam(required = false) final String name) {
+
+        List<Neurodiversity> neurodiversities;
+        if (name != null && !name.isEmpty()) {
+            neurodiversities = neurodivergencyRepository.findByNameStartingWithIgnoreCase(name);
+        } else {
+            neurodiversities = neurodivergencyRepository.findAll();
+        }
+        return new ResponseEntity<>(neurodiversities, HttpStatus.OK);
+    }
+
+    //  @RequestParams  //
 }
