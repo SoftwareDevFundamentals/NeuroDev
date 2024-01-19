@@ -59,15 +59,12 @@ public final class NeurodiversityController {
     // Post Request
     @PostMapping("/api/v1/neurodiversity")
     public ResponseEntity<?> createEntity(@RequestBody final Neurodiversity neurodiversity) {
-        var neuroName = neurodiversity.getName();
-        var neuroExists = neurodivergencyRepository.findByName(neuroName);
 
-        if (neuroExists.isEmpty()) {
-            neurodivergencyRepository.save(neurodiversity);
-            return new ResponseEntity<>(neurodiversity, HttpStatus.OK);
+        if (neurodivergencyRepository.existsByName(neurodiversity.getName())) {
+            return new ResponseEntity<>("Neurodiversity already exists.", HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("The document already exist", HttpStatus.CONFLICT);
-
+        neurodivergencyRepository.save(neurodiversity);
+        return new ResponseEntity<>(neurodiversity, HttpStatus.OK);
     }
 
     // Put Request //
