@@ -54,6 +54,9 @@ public final class NeurodiversityController {
 
     @PostMapping("/api/v1/neurodiversity")
     public ResponseEntity<?> createEntity(@RequestBody final Neurodiversity neurodiversity) {
+        if (neurodivergencyRepository.existsByName(neurodiversity.getName())) {
+            return new ResponseEntity<>("Neurodiversity already exists.", HttpStatus.CONFLICT);
+        }
         neurodivergencyRepository.save(neurodiversity);
         return new ResponseEntity<>(neurodiversity, HttpStatus.OK);
     }
@@ -61,7 +64,7 @@ public final class NeurodiversityController {
     // Put Request //
     @PutMapping("/api/v1/neurodiversity/{id}")
     public ResponseEntity<Neurodiversity> updateN(@PathVariable(value = "id") final String id,
-            @RequestBody final Map<String, Object> fields) {
+                                                  @RequestBody final Map<String, Object> fields) {
         Neurodiversity updatedNeurodiversity = updateNeurodiversityFields(id, fields);
         neurodivergencyRepository.save(updatedNeurodiversity);
         return ResponseEntity.ok(updatedNeurodiversity);
