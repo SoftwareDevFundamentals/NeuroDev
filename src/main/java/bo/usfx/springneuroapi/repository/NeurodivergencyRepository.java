@@ -14,4 +14,6 @@ public interface NeurodivergencyRepository extends MongoRepository<Neurodiversit
     List<Neurodiversity> findByDescriptionContaining(String keyword);
 
     List<Neurodiversity> findByNameStartingWithIgnoreCase(String name);
+
+    boolean existsByName(String name);
 }
