@@ -33,27 +33,33 @@ public final class NeurodiversityController {
     }
 
     // get entity by method getId
+
     @GetMapping("/api/v1/neurodiversity/{id}")
     public ResponseEntity<?> getById(@PathVariable final String id) {
+
         var neuro = neurodivergencyRepository.findById(id);
-        if (neuro != null) {
-            return ResponseEntity.ok(neuro);
+
+        if (neuro.isPresent()) {
+            return new ResponseEntity<>(neuro, HttpStatus.OK);
         }
-        return null;
+        return new ResponseEntity<>("Document with id: " + id + " was not found", HttpStatus.NOT_FOUND);
+
     }
 
     // get entity by method getName
     @GetMapping("/api/v1/neurodiversity-name/{name}")
     public ResponseEntity<?> getByName(@PathVariable final String name) {
         var neuro = neurodivergencyRepository.findByName(name);
-        if (neuro != null) {
+        if (!neuro.isEmpty()) {
             return ResponseEntity.ok(neuro);
         }
-        return null;
+        return new ResponseEntity<>("Document with name: " + name + " was not found", HttpStatus.NOT_FOUND);
     }
 
+    // Post Request
     @PostMapping("/api/v1/neurodiversity")
     public ResponseEntity<?> createEntity(@RequestBody final Neurodiversity neurodiversity) {
+
         if (neurodivergencyRepository.existsByName(neurodiversity.getName())) {
             return new ResponseEntity<>("Neurodiversity already exists.", HttpStatus.CONFLICT);
         }
@@ -87,12 +93,14 @@ public final class NeurodiversityController {
     // Delete Request
     @DeleteMapping("/api/v1/neurodiversity/{id}")
     public ResponseEntity<?> deleteNeuro(@PathVariable("id") final String id) {
-        try {
+
+        var neuroObjec = neurodivergencyRepository.findById(id);
+        if (neuroObjec.isPresent()) {
             neurodivergencyRepository.deleteById(id);
             return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>("The document does not exist", HttpStatus.NOT_FOUND);
+
     }
 
     // @RequestParams //
