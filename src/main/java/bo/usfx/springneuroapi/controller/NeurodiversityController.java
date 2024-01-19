@@ -108,7 +108,7 @@ public final class NeurodiversityController {
     }
 
     // key word
-    @GetMapping("/api/v1/neurodiversities-description/{key}")
+    @GetMapping("/api/v1/neurodiversities/{key}")
     public ResponseEntity<List<Neurodiversity>> getByDescription(@PathVariable("key") final String keyword) {
         List<Neurodiversity> neuro = neurodivergencyRepository.findByDescriptionContaining(keyword);
         if (!neuro.isEmpty()) {
