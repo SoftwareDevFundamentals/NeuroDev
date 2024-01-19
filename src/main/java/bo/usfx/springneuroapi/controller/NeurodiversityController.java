@@ -24,8 +24,8 @@ import java.util.Optional;
 
 @RestController
 public final class NeurodiversityController {
-
     private final NeurodivergencyRepository neurodivergencyRepository;
+
     @Autowired
     public NeurodiversityController(NeurodivergencyRepository neurodivergencyRepository) {
         this.neurodivergencyRepository = neurodivergencyRepository;
@@ -45,7 +45,6 @@ public final class NeurodiversityController {
         return neuroOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
     // get entity by method getName
     @GetMapping("/api/v1/neurodiversity-name/{name}")
     public ResponseEntity<Neurodiversity> getByName(@PathVariable final String name) {
@@ -64,7 +63,6 @@ public final class NeurodiversityController {
         neurodivergencyRepository.save(neurodiversity);
         return new ResponseEntity<>(neurodiversity, HttpStatus.CREATED);
     }
-
 
     // Put Request //
     @PutMapping("/api/v1/neurodiversity/{id}")
@@ -100,7 +98,6 @@ public final class NeurodiversityController {
         }
     }
 
-
     // @RequestParams //
 
     @GetMapping("/api/v1/neurodiversity")
@@ -125,7 +122,6 @@ public final class NeurodiversityController {
         }
         return ResponseEntity.notFound().build();
     }
-
 
     // @RequestParams //
 }
