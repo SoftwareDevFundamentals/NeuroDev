@@ -20,11 +20,16 @@ import org.springframework.web.server.ResponseStatusException;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public final class NeurodiversityController {
+
+    private final NeurodivergencyRepository neurodivergencyRepository;
     @Autowired
-    private NeurodivergencyRepository neurodivergencyRepository;
+    public NeurodiversityController(NeurodivergencyRepository neurodivergencyRepository) {
+        this.neurodivergencyRepository = neurodivergencyRepository;
+    }
 
     // get all entities
     @GetMapping("/api/v1/neurodiversities")
@@ -34,29 +39,32 @@ public final class NeurodiversityController {
 
     // get entity by method getId
     @GetMapping("/api/v1/neurodiversity/{id}")
-    public ResponseEntity<?> getById(@PathVariable final String id) {
-        var neuro = neurodivergencyRepository.findById(id);
-        if (neuro != null) {
-            return ResponseEntity.ok(neuro);
-        }
-        return null;
+    public ResponseEntity<Neurodiversity> getById(@PathVariable final String id) {
+        Optional<Neurodiversity> neuroOptional = neurodivergencyRepository.findById(id);
+
+        return neuroOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
 
     // get entity by method getName
     @GetMapping("/api/v1/neurodiversity-name/{name}")
-    public ResponseEntity<?> getByName(@PathVariable final String name) {
-        var neuro = neurodivergencyRepository.findByName(name);
-        if (neuro != null) {
+    public ResponseEntity<Neurodiversity> getByName(@PathVariable final String name) {
+        List<Neurodiversity> neuroList = neurodivergencyRepository.findByName(name);
+
+        if (!neuroList.isEmpty()) {
+            Neurodiversity neuro = neuroList.getFirst();
             return ResponseEntity.ok(neuro);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return null;
     }
 
     @PostMapping("/api/v1/neurodiversity")
-    public ResponseEntity<?> createEntity(@RequestBody final Neurodiversity neurodiversity) {
+    public ResponseEntity<Neurodiversity> createEntity(@RequestBody final Neurodiversity neurodiversity) {
         neurodivergencyRepository.save(neurodiversity);
         return new ResponseEntity<>(neurodiversity, HttpStatus.OK);
     }
+
 
     // Put Request //
     @PutMapping("/api/v1/neurodiversity/{id}")
@@ -74,7 +82,7 @@ public final class NeurodiversityController {
         fields.forEach((key, value) -> {
             Field field = ReflectionUtils.findField(Neurodiversity.class, key);
             if (field != null) {
-                field.setAccessible(true);
+
                 ReflectionUtils.setField(field, existing, value);
             }
         });
@@ -83,7 +91,7 @@ public final class NeurodiversityController {
 
     // Delete Request
     @DeleteMapping("/api/v1/neurodiversity/{id}")
-    public ResponseEntity<?> deleteNeuro(@PathVariable("id") final String id) {
+    public ResponseEntity<String> deleteNeuro(@PathVariable("id") final String id) {
         try {
             neurodivergencyRepository.deleteById(id);
             return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
@@ -91,6 +99,7 @@ public final class NeurodiversityController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
 
     // @RequestParams //
 
