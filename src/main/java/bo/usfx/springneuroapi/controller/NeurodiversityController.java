@@ -27,7 +27,7 @@ public final class NeurodiversityController {
     private final NeurodivergencyRepository neurodivergencyRepository;
 
     @Autowired
-    public NeurodiversityController(NeurodivergencyRepository neurodivergencyRepository) {
+    public NeurodiversityController(final  NeurodivergencyRepository neurodivergencyRepository) {
         this.neurodivergencyRepository = neurodivergencyRepository;
     }
 
