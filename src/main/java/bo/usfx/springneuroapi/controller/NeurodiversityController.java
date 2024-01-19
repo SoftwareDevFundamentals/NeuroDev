@@ -62,7 +62,7 @@ public final class NeurodiversityController {
     @PostMapping("/api/v1/neurodiversity")
     public ResponseEntity<Neurodiversity> createEntity(@RequestBody final Neurodiversity neurodiversity) {
         neurodivergencyRepository.save(neurodiversity);
-        return new ResponseEntity<>(neurodiversity, HttpStatus.OK);
+        return new ResponseEntity<>(neurodiversity, HttpStatus.CREATED);
     }
 
 
